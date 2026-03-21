@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
 export function Header() {
@@ -12,8 +13,17 @@ export function Header() {
     <header className="fixed top-0 inset-x-0 z-50 bg-navy">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 xl:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5 text-xl font-heading font-bold text-white tracking-tight">
-            MyDomos Africa
+          <Link href="/" className="-m-1.5 p-1.5 text-xl font-heading font-bold text-white tracking-tight flex items-center gap-3">
+            <div className="h-11 w-11 rounded-full overflow-hidden border border-gold/40 relative bg-white flex items-center justify-center shadow-inner">
+              <Image 
+                src="/logo.png" 
+                alt="MyDomos Logo" 
+                fill 
+                className="object-contain scale-125 transition-transform" 
+                priority
+              />
+            </div>
+            <span>MyDomos Africa</span>
           </Link>
         </div>
         <div className="flex xl:hidden">
@@ -54,8 +64,16 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="xl:hidden fixed inset-0 z-50 bg-navy/95 backdrop-blur-sm sm:ring-1 sm:ring-gray-900/10 h-screen overflow-y-auto">
           <div className="flex items-center justify-between p-4">
-            <Link href="/" className="-m-1.5 p-1.5 text-xl font-heading font-bold text-white tracking-tight" onClick={() => setMobileMenuOpen(false)}>
-              MyDomos Africa
+            <Link href="/" className="-m-1.5 p-1.5 text-xl font-heading font-bold text-white tracking-tight flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
+              <div className="h-11 w-11 rounded-full overflow-hidden border border-gold/40 relative bg-white flex items-center justify-center shadow-inner">
+                <Image 
+                  src="/logo.png" 
+                  alt="MyDomos Logo" 
+                  fill 
+                  className="object-contain scale-125 transition-transform" 
+                />
+              </div>
+              <span>MyDomos Africa</span>
             </Link>
             <button
               type="button"

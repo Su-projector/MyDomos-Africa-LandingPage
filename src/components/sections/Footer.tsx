@@ -1,20 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Linkedin, Twitter, Instagram } from 'lucide-react';
 
 const footerLinks = {
-  Solutions: [
-    { label: 'Rent Protection', href: '#platform' },
-    { label: 'Agent Verification', href: '#platform' },
-    { label: 'Tenancy Management', href: '#how-it-works' },
+  Platform: [
+    { label: 'The Platform', href: '#platform' },
+    { label: 'For Tenants', href: '#tenants' },
+    { label: 'For Landlords', href: '#landlords' },
+    { label: 'For Agents', href: '#agents' },
   ],
   Company: [
     { label: 'About DomosHQ', href: '#why-it-matters' },
     { label: 'For Investors', href: '#investors' },
-    { label: 'Careers', href: '#build-with-us' },
+    { label: 'Build With Us', href: '#build-with-us' },
   ],
   Legal: [
     { label: 'Privacy Policy', href: '#' },
-    { label: 'Terms of Service', href: '#' },
+    { label: 'Terms of Use', href: '#' },
+    { label: 'Contact', href: '#waitlist' },
   ],
 };
 
@@ -26,14 +30,38 @@ export function Footer() {
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16 py-16 lg:py-20">
           
-          {/* Brand Column */}
+          {/* Brand Block (Left) */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="text-xl font-heading font-bold text-white tracking-tight">
-              MyDomos <span className="text-gold">Africa</span>
+            <Link href="/" className="inline-flex items-center gap-4 group">
+              <div className="h-16 w-16 rounded-full bg-white border-2 border-gold relative overflow-hidden shrink-0 shadow-lg">
+                <Image 
+                  src="/logo.png" 
+                  alt="MyDomos Logo" 
+                  fill 
+                  className="object-contain scale-125 p-0" 
+                />
+              </div>
+              <div className="text-2xl font-heading font-bold text-white tracking-tight">
+                MyDomos <span className="text-white">Africa</span>
+              </div>
             </Link>
-            <p className="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">
-              DomosHQ builds the institutional trust infrastructure that Africa&rsquo;s rental housing market has never had.
+            <p className="mt-2 text-gold font-heading font-bold text-sm tracking-wide">
+              Africa&rsquo;s Home for Rental Trust.
             </p>
+            <div className="mt-8 flex gap-6">
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Linkedin className="h-5 w-5" />
+                <span className="sr-only">LinkedIn</span>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Twitter className="h-5 w-5" />
+                <span className="sr-only">X (Twitter)</span>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Instagram className="h-5 w-5" />
+                <span className="sr-only">Instagram</span>
+              </Link>
+            </div>
           </div>
 
           {/* Link Columns */}
@@ -59,13 +87,19 @@ export function Footer() {
         </div>
 
         {/* Bottom Legal Strip */}
-        <div className="border-t border-gray-700/50 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
-          <p className="text-gray-500">
-            &copy; {new Date().getFullYear()} DomosHQ. All rights reserved.
+        <div className="border-t border-gray-700/50 py-10 flex flex-col items-center text-center gap-6">
+          <p className="text-base text-white/90 font-medium font-heading italic">
+            DomosHQ builds the institution. My Domos Africa is the experience.
           </p>
-          <p className="text-gray-500">
-            My Domos Africa is a product of DomosHQ.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-xs tracking-wide text-gray-500 uppercase">
+            <p>
+              &copy; {new Date().getFullYear()} DomosHQ. All rights reserved. 
+            </p>
+            <span className="hidden sm:inline text-gray-700">•</span>
+            <p>
+              My Domos Africa is a product of DomosHQ.
+            </p>
+          </div>
         </div>
 
       </div>

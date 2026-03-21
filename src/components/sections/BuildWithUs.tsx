@@ -3,28 +3,24 @@ import { Button } from '@/components/ui/Button';
 
 const openRoles = [
   {
-    tier: 'Engineering',
-    title: 'Frontend Engineer (Next.js / React)',
-    description: 'Build the user-facing systems that power rental protection across Africa. You will work on high-performance interfaces, real-time verification flows, and mobile-first design at scale.',
-    type: 'Full-time · Remote (Africa)'
+    tier: 'Equity Contributor / Volunteer / Intern',
+    title: 'Head of Product',
+    description: 'Own the product roadmap for My Domos Africa. Translate user needs and business strategy into a structured, prioritised build plan.',
   },
   {
-    tier: 'Engineering',
-    title: 'Backend Engineer (Node.js / Python)',
-    description: 'Architect and scale the trust infrastructure layer — identity verification, payment protection, tenancy records, and dispute resolution systems across multiple African markets.',
-    type: 'Full-time · Remote (Africa)'
+    tier: 'Equity Contributor / Volunteer / Intern',
+    title: 'Product & UI/UX Designer',
+    description: 'Design how DomosHQ and My Domos Africa look, feel, and communicate \u2014 from the brand identity system to every product screen.',
   },
   {
-    tier: 'Operations',
-    title: 'Country Launcher — Nigeria',
-    description: 'Own the go-to-market execution for our primary launch market. You will coordinate agent onboarding, tenant acquisition, landlord partnerships, and field operations across key Nigerian cities.',
-    type: 'Full-time · Lagos, Nigeria'
+    tier: 'Volunteer / Intern',
+    title: 'Graphic Designer',
+    description: 'Produce the visual assets that bring the DomosHQ brand to life across marketing, social media, and communications.',
   },
   {
-    tier: 'Design',
-    title: 'Product Designer',
-    description: 'Design the institutional trust experience for millions of Africans entering the formal rental system for the first time. You will define interactions, interfaces, and user flows across web and mobile.',
-    type: 'Full-time · Remote (Africa)'
+    tier: 'Volunteer / Intern',
+    title: 'Social Media Strategist / Manager',
+    description: 'Define and manage DomosHQ\u2019s institutional social media presence across LinkedIn, X, and Instagram from founding stage.',
   }
 ];
 
@@ -39,7 +35,7 @@ export function BuildWithUs() {
             We are building the team that builds this.
           </h2>
           <p className="mt-6 text-lg md:text-xl leading-8 text-gray-600">
-            DomosHQ is not hiring for roles. We are recruiting for a mission. If you believe Africa&rsquo;s rental market deserves institutional infrastructure &mdash; we want to hear from you.
+            This is a rare invitation. You are being asked to join before the product is built, the brand is launched, or the story is known. That is what founding means.
           </p>
         </div>
 
@@ -56,24 +52,26 @@ export function BuildWithUs() {
               <h3 className="text-xl lg:text-2xl font-heading font-bold text-navy mb-4 group-hover:text-navy transition-colors">
                 {role.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-600 leading-relaxed">
                 {role.description}
               </p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">{role.type}</span>
-              </div>
             </div>
           ))}
         </div>
 
-        {/* General Application CTA */}
+        {/* Contributor CTA */}
         <div className="mt-16 text-center">
           <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
-            Don&rsquo;t see your role? We are always looking for exceptional people who believe in what we are building.
+            We are not building a startup. We are building an institution. We need people who understand the difference.
           </p>
-          <Button variant="outline" size="lg" className="bg-navy text-gold">
-            Send a General Application &rarr;
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button variant="default" size="lg" className="w-full sm:w-auto">
+              Apply Now &rarr;
+            </Button>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto bg-navy text-gold">
+              View All Open Roles &rarr;
+            </Button>
+          </div>
         </div>
 
       </div>

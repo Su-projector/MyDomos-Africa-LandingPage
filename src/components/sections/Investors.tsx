@@ -28,7 +28,7 @@ export function Investors() {
   return (
     <section id="investors" className="py-24 bg-gray-50 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center mb-16 lg:mb-24">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-navy">
@@ -40,7 +40,7 @@ export function Investors() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          
+
           {/* Market Opportunity */}
           <div>
             <h3 className="text-sm font-heading font-bold text-gold uppercase tracking-widest mb-8 text-center lg:text-left">Market Opportunity</h3>
@@ -93,7 +93,7 @@ export function Investors() {
                 Request the Investor Brief &rarr;
               </Button>
             </div>
-            
+
           </div>
 
         </div>
