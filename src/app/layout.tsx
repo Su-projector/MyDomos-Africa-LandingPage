@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.png",
+        secureUrl: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "My Domos Africa - Institutional Trust Layer for Rental Market",
@@ -33,6 +34,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "My Domos Africa | Rental Trust & Protection Infrastructure",
     description: "The institutional trust layer for Africa's rental market. Verified agreements, payment protection, and property management for tenants, landlords, and agents.",
+    images: ["/og-image.png"],
+    creator: "@domoshq",
+  },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
   appleWebApp: {
     title: "My Domos Africa",
