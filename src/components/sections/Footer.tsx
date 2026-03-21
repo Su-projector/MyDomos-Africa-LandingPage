@@ -26,19 +26,19 @@ export function Footer() {
   return (
     <footer className="bg-navy text-gray-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
+
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16 py-16 lg:py-20">
-          
+
           {/* Brand Block (Left) */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="text-xl sm:text-2xl font-heading font-bold text-white tracking-tight flex items-center gap-2 sm:gap-3">
               <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-full overflow-hidden border border-gold/40 shrink-0 relative bg-white flex items-center justify-center shadow-inner">
-                <Image 
-                  src="/logo.png" 
-                  alt="MyDomos Logo" 
-                  fill 
-                  className="object-contain scale-110" 
+                <Image
+                  src="/logo.png"
+                  alt="MyDomos Logo"
+                  fill
+                  className="object-contain scale-110"
                 />
               </div>
               <div>MyDomos <span className="text-white">Africa</span></div>
@@ -47,15 +47,15 @@ export function Footer() {
               Africa&rsquo;s Home for Rental Trust.
             </p>
             <div className="mt-8 flex gap-6">
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="https://www.linkedin.com/company/domoshq/" className="text-gray-400 hover:text-white transition-colors">
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="https://x.com/DomosHQ" className="text-gray-400 hover:text-white transition-colors">
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">X (Twitter)</span>
               </Link>
-              <Link href="mailto:hello@mydomosafrica.app" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="mailto:official.mydomosafrica@gmail.com" className="text-gray-400 hover:text-white transition-colors">
                 <Mail className="h-5 w-5" />
                 <span className="sr-only">Email</span>
               </Link>
@@ -71,8 +71,8 @@ export function Footer() {
               <ul className="mt-4 space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link 
-                      href={link.href} 
+                    <Link
+                      href={link.href}
                       className="text-sm text-gray-400 hover:text-gold transition-colors"
                     >
                       {link.label}
@@ -91,7 +91,7 @@ export function Footer() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-xs tracking-wide text-gray-500 uppercase">
             <p>
-              &copy; {new Date().getFullYear()} DomosHQ. All rights reserved. 
+              &copy; {new Date().getFullYear()} DomosHQ. All rights reserved.
             </p>
             <span className="hidden sm:inline text-gray-700">•</span>
             <p>

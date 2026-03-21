@@ -20,9 +20,11 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.png",
+        secureUrl: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "My Domos Africa - Institutional Trust Layer",
+        type: "image/png",
       },
     ],
     locale: "en_US",
@@ -47,6 +49,14 @@ export default function RootLayout({
       className={`${montserrat.variable} h-full antialiased`}
       prefix="og: http://ogp.me/ns#"
     >
+      <head>
+        {/* Redundant tags for WhatsApp crawler */}
+        <meta property="og:image" content="https://mydomosafrica.vercel.app/og-image.png" />
+        <meta property="og:image:secure_url" content="https://mydomosafrica.vercel.app/og-image.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
