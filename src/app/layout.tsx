@@ -9,12 +9,13 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "My Domos Africa | Rental Trust & Protection Infrastructure",
-  description: "The institutional trust layer for Africa's rental market. Verified agreements, payment protection, and property management for tenants, landlords, and agents.",
+  metadataBase: new URL("https://mydomosafrica.vercel.app"),
+  title: "My Domos Africa | Institutional Rental Trust Layer",
+  description: "Experience secure property management and payment protection. Build trust between tenants, landlords, and agents with Africa's rental infrastructure.",
   openGraph: {
-    title: "My Domos Africa | Rental Trust & Protection Infrastructure",
-    description: "The institutional trust layer for Africa's rental market. Verified agreements, payment protection, and property management for tenants, landlords, and agents.",
-    url: "https://mydomos-africa.vercel.app", // Placeholder, will be updated on deployment
+    title: "My Domos Africa | Institutional Rental Trust Layer",
+    description: "Experience secure property management and payment protection. Build trust between tenants, landlords, and agents with Africa's rental infrastructure.",
+    url: "/",
     siteName: "My Domos Africa",
     images: [
       {
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "My Domos Africa | Rental Trust & Protection Infrastructure",
-    description: "The institutional trust layer for Africa's rental market. Verified agreements, payment protection, and property management for tenants, landlords, and agents.",
+    title: "My Domos Africa | Institutional Rental Trust Layer",
+    description: "Experience secure property management and payment protection. Build trust between tenants, landlords, and agents with Africa's rental infrastructure.",
     images: ["/og-image.png"],
   },
 };
@@ -44,6 +45,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${montserrat.variable} h-full antialiased`}
+      prefix="og: http://ogp.me/ns#"
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
