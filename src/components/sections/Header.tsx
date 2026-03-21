@@ -19,7 +19,7 @@ export function Header() {
                 src="/logo.png" 
                 alt="MyDomos Logo" 
                 fill 
-                className="object-contain scale-110 transition-transform" 
+                className="object-contain scale-150 transition-transform" 
                 priority
               />
             </div>
@@ -70,7 +70,7 @@ export function Header() {
                   src="/logo.png" 
                   alt="MyDomos Logo" 
                   fill 
-                  className="object-contain scale-110 transition-transform" 
+                  className="object-contain scale-150 transition-transform" 
                 />
               </div>
               <span>MyDomos Africa</span>

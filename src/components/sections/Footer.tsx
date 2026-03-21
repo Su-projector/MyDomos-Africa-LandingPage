@@ -38,7 +38,7 @@ export function Footer() {
                   src="/logo.png"
                   alt="MyDomos Logo"
                   fill
-                  className="object-contain scale-110"
+                  className="object-contain scale-150"
                 />
               </div>
               <div>MyDomos <span className="text-white">Africa</span></div>
