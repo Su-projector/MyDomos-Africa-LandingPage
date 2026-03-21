@@ -32,18 +32,16 @@ export function Footer() {
           
           {/* Brand Block (Left) */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-4 group">
-              <div className="h-16 w-16 rounded-full bg-white border-2 border-gold relative overflow-hidden shrink-0 shadow-lg">
+            <Link href="/" className="text-xl sm:text-2xl font-heading font-bold text-white tracking-tight flex items-center gap-2 sm:gap-3">
+              <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-full overflow-hidden border border-gold/40 shrink-0 relative bg-white flex items-center justify-center shadow-inner">
                 <Image 
                   src="/logo.png" 
                   alt="MyDomos Logo" 
                   fill 
-                  className="object-contain scale-125 p-0" 
+                  className="object-contain scale-110" 
                 />
               </div>
-              <div className="text-2xl font-heading font-bold text-white tracking-tight">
-                MyDomos <span className="text-white">Africa</span>
-              </div>
+              <div>MyDomos <span className="text-white">Africa</span></div>
             </Link>
             <p className="mt-2 text-gold font-heading font-bold text-sm tracking-wide">
               Africa&rsquo;s Home for Rental Trust.
