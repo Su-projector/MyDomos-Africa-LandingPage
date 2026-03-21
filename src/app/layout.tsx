@@ -9,22 +9,19 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mydomos-africa.vercel.app"), // Replace with your production URL
   title: "My Domos Africa | Rental Trust & Protection Infrastructure",
   description: "The institutional trust layer for Africa's rental market. Verified agreements, payment protection, and property management for tenants, landlords, and agents.",
   openGraph: {
     title: "My Domos Africa | Rental Trust & Protection Infrastructure",
     description: "The institutional trust layer for Africa's rental market. Verified agreements, payment protection, and property management for tenants, landlords, and agents.",
-    url: "/",
+    url: "https://mydomos-africa.vercel.app", // Placeholder, will be updated on deployment
     siteName: "My Domos Africa",
     images: [
       {
         url: "/og-image.png",
-        secureUrl: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "My Domos Africa - Institutional Trust Layer for Rental Market",
-        type: 'image/png',
+        alt: "My Domos Africa - Institutional Trust Layer",
       },
     ],
     locale: "en_US",
@@ -35,14 +32,6 @@ export const metadata: Metadata = {
     title: "My Domos Africa | Rental Trust & Protection Infrastructure",
     description: "The institutional trust layer for Africa's rental market. Verified agreements, payment protection, and property management for tenants, landlords, and agents.",
     images: ["/og-image.png"],
-    creator: "@domoshq",
-  },
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-  },
-  appleWebApp: {
-    title: "My Domos Africa",
   },
 };
 
@@ -55,14 +44,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${montserrat.variable} h-full antialiased`}
-      prefix="og: http://ogp.me/ns#"
     >
-      <head>
-        {/* Force WhatsApp to see the image immediately */}
-        <meta property="og:image" content="https://mydomos-africa.vercel.app/og-image.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
