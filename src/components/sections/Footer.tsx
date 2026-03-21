@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Linkedin, Twitter, Instagram } from 'lucide-react';
+import { Linkedin, Twitter, Mail } from 'lucide-react';
 
 const footerLinks = {
   Platform: [
@@ -55,9 +55,9 @@ export function Footer() {
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">X (Twitter)</span>
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
+              <Link href="mailto:hello@mydomosafrica.app" className="text-gray-400 hover:text-white transition-colors">
+                <Mail className="h-5 w-5" />
+                <span className="sr-only">Email</span>
               </Link>
             </div>
           </div>
