@@ -55,7 +55,14 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${montserrat.variable} h-full antialiased`}
+      prefix="og: http://ogp.me/ns#"
     >
+      <head>
+        {/* Force WhatsApp to see the image immediately */}
+        <meta property="og:image" content="https://mydomos-africa.vercel.app/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
