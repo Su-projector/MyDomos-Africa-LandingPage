@@ -65,12 +65,21 @@ export function BuildWithUs() {
             We are not building a startup. We are building an institution. We need people who understand the difference.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="default" size="lg" className="w-full sm:w-auto">
-              Apply Now &rarr;
-            </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto bg-navy text-gold">
-              View All Open Roles &rarr;
-            </Button>
+            <a href="mailto:official.domoshq@gmail.com" className="w-full sm:w-auto">
+              <Button variant="default" size="lg" className="w-full">
+                Apply Now &rarr;
+              </Button>
+            </a>
+            <a 
+              href="https://docs.google.com/document/d/1fUd1HteFh5yZps2oC5flYsidNC8lGd4e" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-full sm:w-auto"
+            >
+              <Button variant="outline" size="lg" className="w-full bg-navy text-gold hover:bg-navy/90 border-gold/30 transition-all">
+                View All Open Roles &rarr;
+              </Button>
+            </a>
           </div>
         </div>
 
