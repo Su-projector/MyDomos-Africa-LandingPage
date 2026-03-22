@@ -1,7 +1,48 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
+import { joinWaitlist } from '@/lib/actions/waitlist';
+import { waitlistSchema, type WaitlistInput } from '@/lib/schemas/waitlist';
+import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+
+type FormData = WaitlistInput;
 
 export function Waitlist() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(waitlistSchema),
+  });
+
+  const onSubmit = async (data: FormData) => {
+    setStatus('loading');
+    try {
+      const result = await joinWaitlist(data);
+      if (result.success) {
+        setStatus('success');
+        setMessage(result.message || "Thank you for joining!");
+        reset();
+      } else {
+        setStatus('error');
+        setMessage("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+      setMessage("A network error occurred.");
+    }
+  };
+
   return (
     <section id="waitlist" className="py-24 bg-navy sm:py-32 relative overflow-hidden">
       {/* Background Decorators */}
@@ -19,73 +60,135 @@ export function Waitlist() {
         {/* Waitlist Form Container */}
         <div className="mx-auto max-w-xl bg-white rounded-4xl shadow-2xl overflow-hidden border border-gray-100">
           <div className="px-6 py-10 sm:px-12 sm:py-14">
-            <div className="text-center mb-10">
-              <h3 className="text-2xl font-heading font-bold text-navy mb-4">Register your early access.</h3>
-              <p className="text-base text-gray-600 leading-relaxed">
-                Join the waitlist to be among the first landlords, tenants, and agents on My Domos Africa. Early access users receive priority onboarding and founding user recognition.
-              </p>
-            </div>
-
-            <form className="space-y-6" action="#" method="POST">
-              <div>
-                <label htmlFor="fullname" className="sr-only">Full Name</label>
-                <input
-                  type="text"
-                  name="fullname"
-                  id="fullname"
-                  className="block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-navy sm:text-base sm:leading-6 transition-all bg-gray-50/50"
-                  placeholder="Enter your full name"
-                  style={{ fontSize: '16px' }}
-                />
+            
+            {status === 'success' ? (
+              <div className="text-center py-10 animate-in fade-in zoom-in duration-500">
+                <div className="flex justify-center mb-6">
+                  <CheckCircle2 className="h-16 w-16 text-green-500" />
+                </div>
+                <h3 className="text-2xl font-heading font-bold text-navy mb-4">Welcome to the Club!</h3>
+                <p className="text-base text-gray-600 leading-relaxed max-w-sm mx-auto">
+                  {message}
+                </p>
+                <div className="mt-10">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setStatus('idle')}
+                    className="border-navy text-navy hover:bg-navy/5"
+                  >
+                    Register another user
+                  </Button>
+                </div>
               </div>
+            ) : (
+              <>
+                <div className="text-center mb-10">
+                  <h3 className="text-2xl font-heading font-bold text-navy mb-4">Register your early access.</h3>
+                  <p className="text-base text-gray-600 leading-relaxed">
+                    Join the waitlist to be among the first landlords, tenants, and agents on My Domos Africa. Early access users receive priority onboarding.
+                  </p>
+                </div>
 
-              <div>
-                <label htmlFor="email" className="sr-only">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-navy sm:text-base sm:leading-6 transition-all bg-gray-50/50"
-                  placeholder="Enter your email address"
-                  style={{ fontSize: '16px' }}
-                />
-              </div>
+                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                  {/* Status Messages */}
+                  {status === 'error' && (
+                    <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex items-center gap-3 text-red-700 text-sm animate-in slide-in-from-top-2 duration-300">
+                      <AlertCircle className="h-5 w-5 shrink-0" />
+                      <p>{message}</p>
+                    </div>
+                  )}
 
-              <div>
-                <label htmlFor="role" className="sr-only">User Role</label>
-                <select
-                  id="role"
-                  name="role"
-                  className="block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ring-gray-200 focus:ring-2 focus:ring-inset focus:ring-navy sm:text-base sm:leading-6 transition-all bg-gray-50/50 appearance-none cursor-pointer"
-                  defaultValue=""
-                  style={{ fontSize: '16px' }}
-                >
-                  <option value="" disabled hidden>I am a...</option>
-                  <option value="tenant">Tenant</option>
-                  <option value="landlord">Landlord</option>
-                  <option value="agent">Housing Agent</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+                  {/* Name Input */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="fullname" className="sr-only">Full Name</label>
+                    <input
+                      {...register('fullname')}
+                      id="fullname"
+                      className={`block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ${errors.fullname ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-navy'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-base sm:leading-6 transition-all bg-gray-50/50`}
+                      placeholder="Enter your full name"
+                      style={{ fontSize: '16px' }}
+                    />
+                    {errors.fullname && (
+                      <p className="text-xs font-medium text-red-500 px-2">{errors.fullname.message}</p>
+                    )}
+                  </div>
 
-              <div>
-                <label htmlFor="location" className="sr-only">State / City</label>
-                <input
-                  type="text"
-                  name="location"
-                  id="location"
-                  className="block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-navy sm:text-base sm:leading-6 transition-all bg-gray-50/50"
-                  placeholder="Where are you based?"
-                  style={{ fontSize: '16px' }}
-                />
-              </div>
+                  {/* Email Input */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="email" className="sr-only">Email Address</label>
+                    <input
+                      {...register('email')}
+                      type="email"
+                      id="email"
+                      className={`block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ${errors.email ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-navy'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-base sm:leading-6 transition-all bg-gray-50/50`}
+                      placeholder="Enter your email address"
+                      style={{ fontSize: '16px' }}
+                    />
+                    {errors.email && (
+                      <p className="text-xs font-medium text-red-500 px-2">{errors.email.message}</p>
+                    )}
+                  </div>
 
-              <div className="pt-2">
-                <Button type="submit" variant="default" className="w-full h-14 text-base tracking-wide rounded-xl">
-                  Join the Waitlist &rarr;
-                </Button>
-              </div>
-            </form>
+                  {/* Role Select */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="role" className="sr-only">User Role</label>
+                    <div className="relative">
+                      <select
+                        {...register('role')}
+                        id="role"
+                        className={`block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ${errors.role ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-navy'} focus:ring-2 focus:ring-inset sm:text-base sm:leading-6 transition-all bg-gray-50/50 appearance-none cursor-pointer`}
+                        style={{ fontSize: '16px' }}
+                      >
+                        <option value="" disabled hidden>I am a...</option>
+                        <option value="tenant">Tenant</option>
+                        <option value="landlord">Landlord</option>
+                        <option value="agent">Housing Agent</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    {errors.role && (
+                      <p className="text-xs font-medium text-red-500 px-2">{errors.role.message}</p>
+                    )}
+                  </div>
+
+                  {/* Location Input */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="location" className="sr-only">State / City</label>
+                    <input
+                      {...register('location')}
+                      id="location"
+                      className={`block w-full rounded-xl border-0 py-4 px-5 text-gray-900 ring-1 ring-inset ${errors.location ? 'ring-red-500 focus:ring-red-500' : 'ring-gray-200 focus:ring-navy'} placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-base sm:leading-6 transition-all bg-gray-50/50`}
+                      placeholder="Where are you based?"
+                      style={{ fontSize: '16px' }}
+                    />
+                    {errors.location && (
+                      <p className="text-xs font-medium text-red-500 px-2">{errors.location.message}</p>
+                    )}
+                  </div>
+
+                  <div className="pt-2">
+                    <Button 
+                      type="submit" 
+                      variant="default" 
+                      className="w-full h-14 text-base tracking-wide rounded-xl flex items-center justify-center gap-2"
+                      disabled={status === 'loading'}
+                    >
+                      {status === 'loading' ? (
+                        <>
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          <span>Joining...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Join the Waitlist</span>
+                          <span>&rarr;</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </form>
+              </>
+            )}
           </div>
           
           {/* Privacy Note */}
