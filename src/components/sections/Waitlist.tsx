@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { useForm as useFormspree } from '@formspree/react';
 import { Button } from '@/components/ui/Button';
-import { joinWaitlist } from '@/lib/actions/waitlist';
 import { waitlistSchema, type WaitlistInput } from '@/lib/schemas/waitlist';
 import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 type FormData = WaitlistInput;
 
 export function Waitlist() {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState('');
+  const [state, sendToFormspree] = useFormspree("mwvrgkey");
 
   const {
     register,
@@ -25,23 +23,15 @@ export function Waitlist() {
   });
 
   const onSubmit = async (data: FormData) => {
-    setStatus('loading');
-    try {
-      const result = await joinWaitlist(data);
-      if (result.success) {
-        setStatus('success');
-        setMessage(result.message || "Thank you for joining!");
-        reset();
-      } else {
-        setStatus('error');
-        setMessage("Something went wrong. Please try again.");
-      }
-    } catch (err) {
-      console.error(err);
-      setStatus('error');
-      setMessage("A network error occurred.");
-    }
+    await sendToFormspree(data);
   };
+
+  // Reset local form if Formspree succeeds (though we usually show success UI)
+  React.useEffect(() => {
+    if (state.succeeded) {
+      reset();
+    }
+  }, [state.succeeded, reset]);
 
   return (
     <section id="waitlist" className="py-24 bg-navy sm:py-32 relative overflow-hidden">
@@ -61,19 +51,19 @@ export function Waitlist() {
         <div className="mx-auto max-w-xl bg-white rounded-4xl shadow-2xl overflow-hidden border border-gray-100">
           <div className="px-6 py-10 sm:px-12 sm:py-14">
             
-            {status === 'success' ? (
+            {state.succeeded ? (
               <div className="text-center py-10 animate-in fade-in zoom-in duration-500">
                 <div className="flex justify-center mb-6">
                   <CheckCircle2 className="h-16 w-16 text-green-500" />
                 </div>
                 <h3 className="text-2xl font-heading font-bold text-navy mb-4">Welcome to the Club!</h3>
                 <p className="text-base text-gray-600 leading-relaxed max-w-sm mx-auto">
-                  {message}
+                  Thank you for joining! You&rsquo;ve been added to our early-access list. We&rsquo;ll be in touch soon.
                 </p>
                 <div className="mt-10">
                   <Button 
                     variant="outline" 
-                    onClick={() => setStatus('idle')}
+                    onClick={() => window.location.reload()}
                     className="border-navy text-navy hover:bg-navy/5"
                   >
                     Register another user
@@ -90,11 +80,11 @@ export function Waitlist() {
                 </div>
 
                 <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-                  {/* Status Messages */}
-                  {status === 'error' && (
+                  {/* Formspree Server Errors (Fallback) */}
+                  {state.errors && (
                     <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex items-center gap-3 text-red-700 text-sm animate-in slide-in-from-top-2 duration-300">
                       <AlertCircle className="h-5 w-5 shrink-0" />
-                      <p>{message}</p>
+                      <p>Something went wrong with the submission. Please try again.</p>
                     </div>
                   )}
 
@@ -171,9 +161,9 @@ export function Waitlist() {
                       type="submit" 
                       variant="default" 
                       className="w-full h-14 text-base tracking-wide rounded-xl flex items-center justify-center gap-2"
-                      disabled={status === 'loading'}
+                      disabled={state.submitting}
                     >
-                      {status === 'loading' ? (
+                      {state.submitting ? (
                         <>
                           <Loader2 className="h-5 w-5 animate-spin" />
                           <span>Joining...</span>
