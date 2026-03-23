@@ -64,7 +64,7 @@ export function Waitlist() {
                   <Button 
                     variant="outline" 
                     onClick={() => window.location.reload()}
-                    className="border-navy text-navy hover:bg-navy/5"
+                    className="bg-transparent border-navy text-navy hover:bg-navy hover:text-white transition-all"
                   >
                     Register another user
                   </Button>
@@ -84,7 +84,14 @@ export function Waitlist() {
                   {state.errors && (
                     <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex items-center gap-3 text-red-700 text-sm animate-in slide-in-from-top-2 duration-300">
                       <AlertCircle className="h-5 w-5 shrink-0" />
-                      <p>Something went wrong with the submission. Please try again.</p>
+                      <div>
+                        <p className="font-bold">Submission Error:</p>
+                        {state.errors.getFormErrors().length > 0 ? (
+                          state.errors.getFormErrors().map((err, i) => <p key={i}>{err.message}</p>)
+                        ) : (
+                          <p>Something went wrong with the submission. Please check if your Formspree ID is active and verified.</p>
+                        )}
+                      </div>
                     </div>
                   )}
 
