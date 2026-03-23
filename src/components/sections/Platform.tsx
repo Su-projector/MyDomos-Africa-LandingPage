@@ -57,10 +57,31 @@ const platformData = {
 export function Platform() {
   const [activeTab, setActiveTab] = useState<Audience>('Tenants');
 
+  // Deep-linking: Switch tab based on URL hash
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#tenants') setActiveTab('Tenants');
+      if (hash === '#landlords') setActiveTab('Landlords');
+      if (hash === '#agents') setActiveTab('Agents');
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   return (
     <section id="platform" className="py-24 bg-white sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
+        {/* Stable Anchors for Deep-Linking */}
+        <div className="sr-only">
+          <div id="tenants" className="scroll-mt-32"></div>
+          <div id="landlords" className="scroll-mt-32"></div>
+          <div id="agents" className="scroll-mt-32"></div>
+        </div>
+
         {/* Section Header */}
         <div className="mx-auto max-w-4xl text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-navy">
@@ -100,7 +121,9 @@ export function Platform() {
                     ))}
                   </ul>
                   
-                  <Button variant="default" className="w-full">{data.cta} &rarr;</Button>
+                  <a href="#waitlist">
+                    <Button variant="default" className="w-full">{data.cta} &rarr;</Button>
+                  </a>
                 </div>
               );
             })}
@@ -137,7 +160,9 @@ export function Platform() {
                   <p className="text-lg text-gray-600 leading-relaxed mb-10">
                     {platformData[activeTab].description}
                   </p>
-                  <Button variant="default" size="lg">{platformData[activeTab].cta} &rarr;</Button>
+                  <a href="#waitlist">
+                    <Button variant="default" size="lg">{platformData[activeTab].cta} &rarr;</Button>
+                  </a>
                 </div>
                 
                 <div className="flex-1 lg:border-l lg:border-gray-200 lg:pl-12">

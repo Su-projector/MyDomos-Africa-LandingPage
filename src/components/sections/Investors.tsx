@@ -89,7 +89,7 @@ export function Investors() {
               <p className="text-base text-gray-800 font-medium max-w-md mb-8">
                 If you are building a portfolio in African fintech, proptech, or institutional infrastructure &mdash; this is the conversation worth having.
               </p>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto bg-navy text-gold">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto bg-navy text-gold text-[13px] sm:text-lg whitespace-normal leading-tight px-6 sm:px-8 h-auto py-4 sm:h-14 sm:py-2">
                 Request the Investor Brief &rarr;
               </Button>
             </div>

@@ -53,19 +53,19 @@ export function Hero() {
           <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-700/50 py-8">
             <div className="flex flex-col items-center justify-center p-6 text-center">
               <span className="text-4xl lg:text-5xl font-heading font-bold text-gold">180M+</span>
-              <span className="mt-2 text-sm text-white">Nigerians &mdash; primary<br/>launch market</span>
+              <h3 className="mt-2 text-sm text-white font-normal">Nigerians &mdash; primary<br/>launch market</h3>
             </div>
             <div className="flex flex-col items-center justify-center p-6 text-center">
               <span className="text-4xl lg:text-5xl font-heading font-bold text-gold">1.4B+</span>
-              <span className="mt-2 text-sm text-white">Africans &mdash; continental<br/>ambition</span>
+              <h3 className="mt-2 text-sm text-white font-normal">Africans &mdash; continental<br/>ambition</h3>
             </div>
             <div className="flex flex-col items-center justify-center p-6 text-center">
               <span className="text-4xl lg:text-5xl font-heading font-bold text-gold">3</span>
-              <span className="mt-2 text-sm text-white">User sides: Tenants,<br/>Landlords, Agents</span>
+              <h3 className="mt-2 text-sm text-white font-normal">User sides: Tenants,<br/>Landlords, Agents</h3>
             </div>
             <div className="flex flex-col items-center justify-center p-6 text-center">
               <span className="text-4xl lg:text-5xl font-heading font-bold text-gold">$0</span>
-              <span className="mt-2 text-sm text-white">Institutional coverage<br/>currently available</span>
+              <h3 className="mt-2 text-sm text-white font-normal">Institutional coverage<br/>currently available</h3>
             </div>
           </div>
         </div>

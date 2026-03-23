@@ -17,7 +17,7 @@ export function Header() {
             <div className="h-11 w-11 rounded-full overflow-hidden border border-gold/40 relative bg-white flex items-center justify-center shadow-inner">
               <Image 
                 src="/logo.png" 
-                alt="MyDomos Logo" 
+                alt="My Domos Africa - Institutional Rental Trust Layer Logo" 
                 fill 
                 className="object-contain scale-110 transition-transform" 
                 priority
@@ -36,27 +36,32 @@ export function Header() {
             <Menu className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden xl:flex xl:gap-x-8">
-          <Link href="#platform" className="text-sm font-semibold leading-6 text-white hover:text-gold transition-colors">
-            The Platform
-          </Link>
-          <Link href="#tenants" className="text-sm font-semibold leading-6 text-white hover:text-gold transition-colors">
-            For Tenants
-          </Link>
-          <Link href="#landlords" className="text-sm font-semibold leading-6 text-white hover:text-gold transition-colors">
-            For Landlords
-          </Link>
-          <Link href="#agents" className="text-sm font-semibold leading-6 text-white hover:text-gold transition-colors">
-            For Agents
-          </Link>
-        </div>
-        <div className="hidden xl:flex xl:flex-1 xl:justify-end gap-x-4">
-          <Link href="#investors" className="text-sm flex items-center font-semibold leading-6 text-white hover:text-gold transition-colors mr-4">
-            For Investors
-          </Link>
-          <a href="#waitlist">
-            <Button variant="default">Join the Waitlist &rarr;</Button>
-          </a>
+        <div className="hidden xl:flex xl:items-center">
+          <div className="flex xl:gap-x-8 mr-12 border-r border-white/10 pr-12">
+            <Link href="#platform" className="text-sm whitespace-nowrap font-semibold leading-6 text-white hover:text-gold transition-colors">
+              The Platform
+            </Link>
+            <a href="#tenants" className="text-sm whitespace-nowrap font-semibold leading-6 text-white hover:text-gold transition-colors">
+              For Tenants
+            </a>
+            <a href="#landlords" className="text-sm whitespace-nowrap font-semibold leading-6 text-white hover:text-gold transition-colors">
+              For Landlords
+            </a>
+            <a href="#agents" className="text-sm whitespace-nowrap font-semibold leading-6 text-white hover:text-gold transition-colors">
+              For Agents
+            </a>
+            <Link href="#investors" className="text-sm whitespace-nowrap font-semibold leading-6 text-white hover:text-gold transition-colors">
+              For Investors
+            </Link>
+          </div>
+          <div className="flex xl:items-center xl:gap-x-8">
+            <Link href="#build-with-us" className="text-sm whitespace-nowrap font-semibold leading-6 text-white hover:text-gold transition-colors">
+              Build With Us
+            </Link>
+            <a href="#waitlist" className="shrink-0">
+              <Button variant="default">Join the Waitlist &rarr;</Button>
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -68,7 +73,7 @@ export function Header() {
               <div className="h-11 w-11 rounded-full overflow-hidden border border-gold/40 relative bg-white flex items-center justify-center shadow-inner">
                 <Image 
                   src="/logo.png" 
-                  alt="MyDomos Logo" 
+                  alt="My Domos Africa - Institutional Rental Trust Layer Logo" 
                   fill 
                   className="object-contain scale-110 transition-transform" 
                 />
@@ -90,17 +95,20 @@ export function Header() {
                 <Link href="#platform" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
                   The Platform
                 </Link>
-                <Link href="#tenants" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
+                <a href="#tenants" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
                   For Tenants
-                </Link>
-                <Link href="#landlords" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
+                </a>
+                <a href="#landlords" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
                   For Landlords
-                </Link>
-                <Link href="#agents" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
+                </a>
+                <a href="#agents" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
                   For Agents
-                </Link>
+                </a>
                 <Link href="#investors" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
                   For Investors
+                </Link>
+                <Link href="#build-with-us" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
+                  Build With Us
                 </Link>
               </div>
               <div className="py-6">

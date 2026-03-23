@@ -36,7 +36,7 @@ export function Footer() {
               <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-full overflow-hidden border border-gold/40 shrink-0 relative bg-white flex items-center justify-center shadow-inner">
                 <Image
                   src="/logo.png"
-                  alt="MyDomos Logo"
+                  alt="My Domos Africa - Institutional Rental Trust Layer Logo"
                   fill
                   className="object-contain scale-110"
                 />

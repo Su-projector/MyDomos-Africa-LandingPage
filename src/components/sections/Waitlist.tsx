@@ -42,8 +42,8 @@ export function Waitlist() {
         
         {/* Section Headline */}
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-white mb-6">
-            My Domos Africa is coming. <span className="block mt-2 text-gold">Be among the first Africans to rent with institutional protection.</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-white mb-6 text-center">
+            Join the Waitlist for Africa&#39;s Secure Rental Infrastructure
           </h2>
         </div>
 

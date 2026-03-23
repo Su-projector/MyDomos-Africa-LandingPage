@@ -10,8 +10,12 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mydomosafrica.vercel.app"),
-  title: "My Domos Africa | Institutional Rental Trust Layer",
-  description: "Experience secure property management and payment protection. Build trust between tenants, landlords, and agents with Africa's rental infrastructure.",
+  title: "My Domos Africa | Rental Trust Layer for Landlords & Tenants",
+  description: "Experience Africa's institutional rental trust layer. Secure property management, payment protection, and verified interactions for tenants, landlords, and agents.",
+  keywords: ["My Domos Africa", "Rental Trust Layer", "Africa Property Management", "Secure Rent Payments Africa", "Tenant Protection Nigeria", "Landlord Security Africa", "DomosHQ"],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "My Domos Africa | Institutional Rental Trust Layer",
     description: "Experience secure property management and payment protection. Build trust between tenants, landlords, and agents with Africa's rental infrastructure.",
@@ -36,6 +40,17 @@ export const metadata: Metadata = {
     description: "Experience secure property management and payment protection. Build trust between tenants, landlords, and agents with Africa's rental infrastructure.",
     images: ["/og-image.png"],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -43,6 +58,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "My Domos Africa",
+    "url": "https://mydomosafrica.vercel.app",
+    "logo": "https://mydomosafrica.vercel.app/logo.png",
+    "description": "Africa's institutional rental trust layer, providing secure property management and payment protection.",
+    "sameAs": [
+      "https://x.com/DomosHQ",
+      "https://www.linkedin.com/company/domoshq/"
+    ]
+  };
+
   return (
     <html
       lang="en"
@@ -50,6 +78,10 @@ export default function RootLayout({
       prefix="og: http://ogp.me/ns#"
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {/* Redundant tags for WhatsApp crawler */}
         <meta property="og:image" content="https://mydomosafrica.vercel.app/og-image.png" />
         <meta property="og:image:secure_url" content="https://mydomosafrica.vercel.app/og-image.png" />

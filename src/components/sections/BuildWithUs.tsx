@@ -32,7 +32,7 @@ export function BuildWithUs() {
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center mb-16 lg:mb-20">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tight text-navy">
-            We are building the team that builds this.
+            Join the Team Building Africa&#39;s Rental Trust Layer
           </h2>
           <p className="mt-6 text-lg md:text-xl leading-8 text-gray-600">
             This is a rare invitation. You are being asked to join before the product is built, the brand is launched, or the story is known. That is what founding means.
