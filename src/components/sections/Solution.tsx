@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, FileSignature, Landmark, Home, ArrowRight } from 'lucide-react';
 
@@ -32,6 +32,48 @@ const steps = [
 ];
 
 export function Solution() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  useEffect(() => {
+    if (!isAutoScrolling) return;
+
+    const container = scrollRef.current;
+    if (!container || !container.children[0]) return;
+
+    // Only automate on mobile (width < 768px)
+    const checkMobile = () => window.innerWidth < 768;
+    if (!checkMobile()) return;
+
+    const cardWidth = (container.children[0] as HTMLElement).offsetWidth + 24; 
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (!isAutoScrolling || !checkMobile()) return;
+      
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+
+      if (scrollLeft + clientWidth >= scrollWidth - 100) {
+        direction = -1;
+      } else if (scrollLeft <= 20) {
+        direction = 1;
+      }
+
+      const nextScroll = scrollLeft + (direction * cardWidth);
+      
+      container.scrollTo({
+        left: nextScroll,
+        behavior: 'smooth'
+      });
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isAutoScrolling]);
+
+  const stopAutoScroll = () => {
+    if (isAutoScrolling) setIsAutoScrolling(false);
+  };
+
   return (
     <section id="solution" className="py-24 bg-white sm:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -51,41 +93,49 @@ export function Solution() {
         </div>
 
         <div className="relative mt-16">
-          {/* Connecting Line (Desktop) */}
-          <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 -translate-y-1/2 z-0"></div>
+          {/* Connecting Line (Desktop/Tablet) */}
+          <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 -translate-y-1/2 z-0"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 relative z-10">
+          <div 
+            ref={scrollRef}
+            onPointerDown={stopAutoScroll}
+            onWheel={stopAutoScroll}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 hide-scrollbar md:grid md:grid-cols-4 md:gap-8 relative z-10"
+          >
             {steps.map((step, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.15 }}
-                className="relative flex flex-col items-center text-center group"
-              >
-                {/* Step Circle */}
-                <div className={`h-20 w-20 rounded-full ${step.color} flex items-center justify-center text-white shadow-lg mb-8 relative transition-transform group-hover:scale-110`}>
-                  <step.icon className="h-10 w-10" />
-                  
-                  {/* Step Number Badge */}
-                  <div className="absolute -top-2 -right-2 h-8 w-8 bg-white rounded-full border border-gray-100 flex items-center justify-center text-navy font-bold text-sm shadow-md">
-                    {idx + 1}
+              <React.Fragment key={idx}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.15 }}
+                  className="flex-none w-[85vw] md:w-auto snap-center relative flex flex-col items-center text-center group"
+                >
+                  {/* Step Circle */}
+                  <div className={`h-20 w-20 rounded-full ${step.color} flex items-center justify-center text-white shadow-lg mb-8 relative transition-transform group-hover:scale-110`}>
+                    <step.icon className="h-10 w-10" />
+                    
+                    {/* Step Number Badge */}
+                    <div className="absolute -top-2 -right-2 h-8 w-8 bg-white rounded-full border border-gray-100 flex items-center justify-center text-navy font-bold text-sm shadow-md">
+                      {idx + 1}
+                    </div>
                   </div>
-                </div>
 
-                <h3 className="text-2xl font-heading font-bold text-navy mb-4">{step.title}</h3>
-                <p className="text-gray-500 leading-relaxed text-sm lg:text-base px-4">
-                  {step.description}
-                </p>
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-navy mb-4">{step.title}</h3>
+                  <p className="text-gray-500 leading-relaxed text-sm lg:text-base px-4">
+                    {step.description}
+                  </p>
+                </motion.div>
 
-                {/* Mobile/Tablet Arrow */}
+                {/* Horizontal Arrow between cards on Mobile only */}
                 {idx < steps.length - 1 && (
-                  <div className="mt-8 lg:hidden flex justify-center text-gray-300">
-                    <ArrowRight className="h-8 w-8 rotate-90 md:rotate-0" />
+                  <div className="md:hidden flex items-center justify-center flex-none px-2">
+                    <div className="h-12 w-12 rounded-full bg-white shadow-premium flex items-center justify-center text-gold border border-gray-50 group-hover:scale-110 transition-transform animate-pulse">
+                      <ArrowRight className="h-6 w-6" />
+                    </div>
                   </div>
                 )}
-              </motion.div>
+              </React.Fragment>
             ))}
           </div>
         </div>

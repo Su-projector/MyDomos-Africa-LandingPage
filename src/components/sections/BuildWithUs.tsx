@@ -1,5 +1,8 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
+import { ArrowRight } from 'lucide-react';
 
 const openRoles = [
   {
@@ -25,8 +28,51 @@ const openRoles = [
 ];
 
 export function BuildWithUs() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  useEffect(() => {
+    if (!isAutoScrolling) return;
+
+    const container = scrollRef.current;
+    if (!container || !container.children[0]) return;
+
+    // Only automate on mobile (width < 768px)
+    const checkMobile = () => window.innerWidth < 768;
+    if (!checkMobile()) return;
+
+    // Get width of first child + gap
+    const cardWidth = (container.children[0] as HTMLElement).offsetWidth + 24; 
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (!isAutoScrolling || !checkMobile()) return;
+      
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+
+      if (scrollLeft + clientWidth >= scrollWidth - 100) {
+        direction = -1;
+      } else if (scrollLeft <= 20) {
+        direction = 1;
+      }
+
+      const nextScroll = scrollLeft + (direction * cardWidth);
+      
+      container.scrollTo({
+        left: nextScroll,
+        behavior: 'smooth'
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoScrolling]);
+
+  const stopAutoScroll = () => {
+    if (isAutoScrolling) setIsAutoScrolling(false);
+  };
+
   return (
-    <section id="build-with-us" className="py-24 bg-white sm:py-32">
+    <section id="build-with-us" className="py-24 bg-white sm:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -39,23 +85,38 @@ export function BuildWithUs() {
           </p>
         </div>
 
-        {/* 2x2 Role Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {/* 2x2 Role Grid / Mobile Horizontal Scroll */}
+        <div 
+          ref={scrollRef}
+          onPointerDown={stopAutoScroll}
+          onWheel={stopAutoScroll}
+          className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 hide-scrollbar md:grid md:grid-cols-2 md:gap-8 md:pb-0"
+        >
           {openRoles.map((role, idx) => (
-            <div 
-              key={idx} 
-              className="group relative bg-gray-50 rounded-2xl border border-gray-200 p-8 lg:p-10 hover:border-gold/50 hover:shadow-lg transition-all duration-300"
-            >
-              <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-bold font-heading tracking-wider uppercase mb-5">
-                {role.tier}
-              </span>
-              <h3 className="text-xl lg:text-2xl font-heading font-bold text-navy mb-4 group-hover:text-navy transition-colors">
-                {role.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {role.description}
-              </p>
-            </div>
+            <React.Fragment key={idx}>
+              <div 
+                className="flex-none w-[85vw] snap-center md:w-auto group relative bg-gray-50 rounded-2xl border border-gray-200 p-8 lg:p-10 hover:border-gold/50 hover:shadow-lg transition-all duration-300"
+              >
+                <span className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-bold font-heading tracking-wider uppercase mb-5">
+                  {role.tier}
+                </span>
+                <h3 className="text-xl lg:text-2xl font-heading font-bold text-navy mb-4 group-hover:text-navy transition-colors">
+                  {role.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {role.description}
+                </p>
+              </div>
+
+              {/* Horizontal Arrow between cards on Mobile */}
+              {idx < openRoles.length - 1 && (
+                <div className="md:hidden flex items-center justify-center flex-none px-2">
+                  <div className="h-10 w-10 rounded-full bg-white shadow-premium flex items-center justify-center text-gold border border-gray-50 animate-pulse">
+                    <ArrowRight className="h-5 w-5" />
+                  </div>
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </div>
 

@@ -1,10 +1,56 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight } from 'lucide-react';
 
 const values = ['Trust', 'Order', 'Accountability', 'Inclusivity', 'Dignity'];
 
 export function WhyItMatters() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  useEffect(() => {
+    if (!isAutoScrolling) return;
+
+    const container = scrollRef.current;
+    if (!container || !container.children[0]) return;
+
+    // Only automate on mobile (width < 768px)
+    const checkMobile = () => window.innerWidth < 768;
+    if (!checkMobile()) return;
+
+    // Get width of first child + gap
+    const cardWidth = (container.children[0] as HTMLElement).offsetWidth + 24; 
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (!isAutoScrolling || !checkMobile()) return;
+      
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+
+      if (scrollLeft + clientWidth >= scrollWidth - 100) {
+        direction = -1;
+      } else if (scrollLeft <= 20) {
+        direction = 1;
+      }
+
+      const nextScroll = scrollLeft + (direction * cardWidth);
+      
+      container.scrollTo({
+        left: nextScroll,
+        behavior: 'smooth'
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoScrolling]);
+
+  const stopAutoScroll = () => {
+    if (isAutoScrolling) setIsAutoScrolling(false);
+  };
+
   return (
-    <section id="why-it-matters" className="py-24 bg-white sm:py-32">
+    <section id="why-it-matters" className="py-24 bg-white sm:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         <div className="mx-auto max-w-4xl text-center mb-16">
@@ -14,14 +60,27 @@ export function WhyItMatters() {
         </div>
 
         {/* Mission & Vision Block */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-200 overflow-hidden rounded-2xl border border-gray-200 shadow-sm mx-auto max-w-5xl">
-          <div className="bg-navy p-10 lg:p-14">
+        <div 
+          ref={scrollRef}
+          onPointerDown={stopAutoScroll}
+          onWheel={stopAutoScroll}
+          className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 hide-scrollbar md:grid md:grid-cols-2 md:gap-px md:pb-0 md:bg-gray-200 md:overflow-hidden md:rounded-2xl md:border md:border-gray-200 shadow-sm mx-auto max-w-5xl"
+        >
+          <div className="flex-none w-[85vw] snap-center bg-navy p-10 lg:p-14 rounded-2xl md:rounded-none md:w-auto">
             <h3 className="text-gold font-heading font-bold uppercase tracking-widest text-sm mb-6">Our Mission</h3>
             <p className="text-xl md:text-2xl text-white font-medium leading-relaxed font-heading">
               To bring order, trust, and financial structure to Africa&rsquo;s broken rental housing market &mdash; protecting landlords, empowering agents, and securing tenants.
             </p>
           </div>
-          <div className="bg-navy p-10 lg:p-14">
+
+          {/* Mobile Arrow Hint */}
+          <div className="md:hidden flex items-center justify-center flex-none px-2">
+            <div className="h-10 w-10 rounded-full bg-white shadow-premium flex items-center justify-center text-gold border border-gray-50 animate-pulse">
+              <ArrowRight className="h-5 w-5" />
+            </div>
+          </div>
+
+          <div className="flex-none w-[85vw] snap-center bg-navy p-10 lg:p-14 rounded-2xl md:rounded-none md:w-auto">
             <h3 className="text-gold font-heading font-bold uppercase tracking-widest text-sm mb-6">Our Vision</h3>
             <p className="text-xl md:text-2xl text-white font-medium leading-relaxed font-heading">
               An Africa where every rental transaction is transparent, every agreement is enforceable, and every African can access housing with dignity.

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Audience = 'Tenants' | 'Landlords' | 'Agents';
@@ -56,6 +56,48 @@ const platformData = {
 
 export function Platform() {
   const [activeTab, setActiveTab] = useState<Audience>('Tenants');
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  // Auto-scroll logic for mobile
+  useEffect(() => {
+    if (!isAutoScrolling) return;
+
+    const container = scrollRef.current;
+    if (!container || !container.children[0]) return;
+
+    // Only automate on mobile (width < 768px - matching our md breakpoint)
+    const checkMobile = () => window.innerWidth < 768;
+    if (!checkMobile()) return;
+
+    const cardWidth = (container.children[0] as HTMLElement).offsetWidth + 24; 
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (!isAutoScrolling || !checkMobile()) return;
+      
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+
+      if (scrollLeft + clientWidth >= scrollWidth - 100) {
+        direction = -1;
+      } else if (scrollLeft <= 20) {
+        direction = 1;
+      }
+
+      const nextScroll = scrollLeft + (direction * cardWidth);
+      
+      container.scrollTo({
+        left: nextScroll,
+        behavior: 'smooth'
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoScrolling]);
+
+  const stopAutoScroll = () => {
+    if (isAutoScrolling) setIsAutoScrolling(false);
+  };
 
   // Deep-linking: Switch tab based on URL hash
   React.useEffect(() => {
@@ -100,31 +142,47 @@ export function Platform() {
         {/* Desktop Interactive Tabs / Mobile Vertical Stack */}
         <div className="mt-16">
           
-          {/* Mobile View: Vertical Stack */}
-          <div className="flex flex-col gap-8 md:hidden">
-            {(Object.keys(platformData) as Audience[]).map((key) => {
+          {/* Mobile View: Horizontal Scroll */}
+          <div 
+            ref={scrollRef}
+            onPointerDown={stopAutoScroll}
+            onWheel={stopAutoScroll}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 hide-scrollbar md:hidden"
+          >
+            {(Object.keys(platformData) as Audience[]).map((key, idx) => {
               const data = platformData[key];
               return (
-                <div key={key} className="bg-gray-50 rounded-2xl border border-gray-200 p-6 shadow-sm">
-                  <span className="inline-block px-3 py-1 rounded-full bg-navy text-gold text-xs font-bold font-heading tracking-wider mb-4">
-                    {data.label}
-                  </span>
-                  <h3 className="text-2xl font-bold font-heading text-navy mb-3">{data.headline}</h3>
-                  <p className="text-gray-600 mb-6">{data.description}</p>
-                  
-                  <ul className="space-y-3 mb-8">
-                    {data.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start text-sm text-gray-700">
-                        <CheckCircle2 className="h-5 w-5 text-gold mr-3 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <a href="#waitlist">
-                    <Button variant="default" className="w-full">{data.cta} &rarr;</Button>
-                  </a>
-                </div>
+                <React.Fragment key={key}>
+                  <div className="flex-none w-[85vw] snap-center bg-gray-50 rounded-2xl border border-gray-200 p-6 shadow-sm flex flex-col group">
+                    <span className="inline-block px-3 py-1 rounded-full bg-navy text-gold text-xs font-bold font-heading tracking-wider mb-4 w-fit">
+                      {data.label}
+                    </span>
+                    <h3 className="text-2xl font-bold font-heading text-navy mb-3">{data.headline}</h3>
+                    <p className="text-gray-600 mb-6 grow">{data.description}</p>
+                    
+                    <ul className="space-y-3 mb-8">
+                      {data.features.slice(0, 5).map((feature, idx) => (
+                        <li key={idx} className="flex items-start text-sm text-gray-700">
+                          <CheckCircle2 className="h-5 w-5 text-gold mr-3 shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <a href="#waitlist">
+                      <Button variant="default" className="w-full">{data.cta} &rarr;</Button>
+                    </a>
+                  </div>
+
+                  {/* Horizontal Arrow between cards on Mobile */}
+                  {idx < Object.keys(platformData).length - 1 && (
+                    <div className="flex items-center justify-center flex-none px-2">
+                      <div className="h-10 w-10 rounded-full bg-white shadow-premium flex items-center justify-center text-gold border border-gray-50 animate-pulse">
+                        <ArrowRight className="h-5 w-5" />
+                      </div>
+                    </div>
+                  )}
+                </React.Fragment>
               );
             })}
           </div>

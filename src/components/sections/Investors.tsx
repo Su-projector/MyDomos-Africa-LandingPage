@@ -1,5 +1,8 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
+import { ArrowRight } from 'lucide-react';
 
 const roadmapData = [
   {
@@ -25,8 +28,51 @@ const roadmapData = [
 ];
 
 export function Investors() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  useEffect(() => {
+    if (!isAutoScrolling) return;
+
+    const container = scrollRef.current;
+    if (!container || !container.children[0]) return;
+
+    // Only automate on mobile (width < 768px)
+    const checkMobile = () => window.innerWidth < 768;
+    if (!checkMobile()) return;
+
+    // Get width of first child + gap
+    const cardWidth = (container.children[0] as HTMLElement).offsetWidth + 24; 
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (!isAutoScrolling || !checkMobile()) return;
+      
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+
+      if (scrollLeft + clientWidth >= scrollWidth - 100) {
+        direction = -1;
+      } else if (scrollLeft <= 20) {
+        direction = 1;
+      }
+
+      const nextScroll = scrollLeft + (direction * cardWidth);
+      
+      container.scrollTo({
+        left: nextScroll,
+        behavior: 'smooth'
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoScrolling]);
+
+  const stopAutoScroll = () => {
+    if (isAutoScrolling) setIsAutoScrolling(false);
+  };
+
   return (
-    <section id="investors" className="py-24 bg-gray-50 sm:py-32">
+    <section id="investors" className="py-24 bg-gray-50 sm:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
@@ -42,16 +88,32 @@ export function Investors() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
 
           {/* Market Opportunity */}
-          <div>
+          <div className="flex flex-col">
             <h3 className="text-sm font-heading font-bold text-gold uppercase tracking-widest mb-8 text-center lg:text-left">Market Opportunity</h3>
-            <div className="bg-navy rounded-3xl overflow-hidden shadow-xl text-center lg:text-left">
-              <div className="p-8 lg:p-10 border-b border-gray-700/50">
+            
+            <div 
+              ref={scrollRef}
+              onPointerDown={stopAutoScroll}
+              onWheel={stopAutoScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 hide-scrollbar lg:block lg:pb-0 lg:overflow-visible lg:bg-navy lg:rounded-3xl lg:shadow-xl"
+            >
+              {/* The Market Card */}
+              <div className="flex-none w-[85vw] snap-center bg-navy rounded-3xl p-8 lg:p-10 lg:w-auto lg:rounded-none lg:border-b lg:border-gray-700/50">
                 <h4 className="text-gold font-heading font-bold text-xl mb-4">The Market</h4>
                 <p className="text-white leading-relaxed">
                   Africa&rsquo;s rental housing market represents billions of dollars in annual transactions &mdash; the overwhelming majority conducted informally, without documentation, verification, or legal protection. This is not a niche segment. It is the primary mode of housing for hundreds of millions of people.
                 </p>
               </div>
-              <div className="p-8 lg:p-10">
+
+              {/* Mobile Arrow Hint */}
+              <div className="lg:hidden flex items-center justify-center flex-none px-2">
+                <div className="h-10 w-10 rounded-full bg-white shadow-premium flex items-center justify-center text-gold border border-gray-50 animate-pulse">
+                  <ArrowRight className="h-5 w-5" />
+                </div>
+              </div>
+
+              {/* The Gap Card */}
+              <div className="flex-none w-[85vw] snap-center bg-navy rounded-3xl p-8 lg:p-10 lg:w-auto lg:rounded-none">
                 <h4 className="text-gold font-heading font-bold text-xl mb-4">The Gap</h4>
                 <p className="text-white leading-relaxed">
                   There is no platform operating at institutional scale that credentials agents, verifies rental parties, and protects all three sides of the transaction simultaneously. My Domos Africa integrates with existing rental platforms and the offline market &mdash; adding a layer of verification, protection, and financial structure to every transaction. The infrastructure category does not exist at scale. DomosHQ is building it first.
