@@ -1,7 +1,10 @@
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
+import { TrustBar } from "@/components/sections/TrustBar";
 import { Problem } from "@/components/sections/Problem";
+import { Solution } from "@/components/sections/Solution";
 import { Platform } from "@/components/sections/Platform";
+import { ProductPreview } from "@/components/sections/ProductPreview";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { WhyItMatters } from "@/components/sections/WhyItMatters";
 import { Investors } from "@/components/sections/Investors";
@@ -15,8 +18,11 @@ export default function Home() {
       <Header />
       <main className="flex-auto">
         <Hero />
+        <TrustBar />
         <Problem />
+        <Solution />
         <Platform />
+        <ProductPreview />
         <HowItWorks />
         <WhyItMatters />
         <Investors />

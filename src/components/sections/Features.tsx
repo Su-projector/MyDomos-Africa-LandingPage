@@ -1,50 +1,73 @@
-import React from 'react';
-import { Home, Shield, TrendingUp } from 'lucide-react';
+"use client";
 
-const features = [
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Landmark, FileSignature, UserCheck, ShieldCheck } from 'lucide-react';
+
+const featureList = [
   {
-    name: 'Smart Property Management',
-    description: 'Automate your daily operations, from rent collection to maintenance requests, with our intuitive platform.',
-    icon: Home,
+    name: 'Escrow Payments',
+    description: 'Rent is held in a secure, protected account and only released when move-in conditions are verified.',
+    icon: Landmark,
   },
   {
-    name: 'Data-Driven Investments',
-    description: 'Access real-time analytics and market insights to make informed decisions and maximize your ROI.',
-    icon: TrendingUp,
+    name: 'Digital Agreements',
+    description: 'Legally-binding, cryptographically-stored lease agreements that protect every party on all sides.',
+    icon: FileSignature,
   },
   {
-    name: 'Secure & Transparent',
-    description: 'Built with enterprise-grade security to ensure your data and transactions are always protected.',
-    icon: Shield,
+    name: 'Tenant Verification',
+    description: 'Instant, institutional-grade KYC and rental history checks to ensure you move in with the right people.',
+    icon: UserCheck,
+  },
+  {
+    name: 'Dispute Protection',
+    description: 'An automated, evidence-based mediation layer that resolves rental disagreements without the stress.',
+    icon: ShieldCheck,
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="py-24 bg-gray-50 sm:py-32">
+    <section id="features" className="py-24 bg-white sm:py-32 border-t border-gray-100">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h3 className="text-base font-semibold leading-7 text-blue-600">Why Choose Us</h3>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Institutional-Grade Features for Africa&#39;s Rental Market
-          </h2>
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-5xl font-heading font-bold tracking-tight text-navy"
+          >
+            Infrastructure-Grade Protection.
+          </motion.h2>
+          <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto font-medium">
+            Every feature on Domos is designed to build trust where it was previously non-existent.
+          </p>
         </div>
         <div className="mx-auto mt-16 max-w-5xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-            {features.map((feature) => (
-              <div key={feature.name} className="flex flex-col items-start bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="rounded-lg bg-blue-50 p-3 ring-1 ring-blue-100 mb-6">
-                  <feature.icon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {featureList.map((feature, idx) => (
+              <motion.div 
+                key={feature.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                className="flex flex-col items-start bg-gray-50 p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-premium transition-all group"
+              >
+                <div className="rounded-2xl bg-white p-4 shadow-sm mb-6 group-hover:bg-navy group-hover:text-gold transition-colors">
+                  <feature.icon className="h-7 w-7 text-navy group-hover:text-gold" aria-hidden="true" />
                 </div>
-                <dt className="text-xl font-semibold leading-7 text-gray-900">
+                <h3 className="text-xl font-heading font-bold leading-7 text-navy">
                   {feature.name}
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                  <p className="flex-auto">{feature.description}</p>
-                </dd>
-              </div>
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-gray-500 font-medium">
+                  {feature.description}
+                </p>
+              </motion.div>
             ))}
-          </dl>
+          </div>
         </div>
       </div>
     </section>

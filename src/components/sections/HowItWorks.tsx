@@ -1,177 +1,139 @@
 "use client";
 
-import React, { useState } from 'react';
-import { cn } from '@/lib/utils';
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Users, ShieldCheck, Landmark, CheckSquare, ArrowRight, UserCircle2, Building2 } from 'lucide-react';
 
-type FlowAudience = 'Tenant Flow' | 'Landlord Flow' | 'Agent Flow';
-
-const howItWorksData = {
-  'Tenant Flow': [
-    {
-      num: '01',
-      title: 'Verify before payment',
-      desc: 'Check agents, landlords, and properties using Wahala Map (risk intelligence) and Vouch Registry (fraud and identity records) before committing financially. Know who you are dealing with before any money moves.'
-    },
-    {
-      num: '02',
-      title: 'Define and lock agreement',
-      desc: 'All rental terms are agreed, documented, and locked before payment is made. Both parties sign the digital agreement within the platform. Nothing is assumed.'
-    },
-    {
-      num: '03',
-      title: 'Pay with protection',
-      desc: 'Payments are tracked and structured to ensure accountability. Funds are only released when agreed conditions are met. Your money is not at risk.'
-    },
-    {
-      num: '04',
-      title: 'Record move-in condition',
-      desc: 'Document the property condition at the start of tenancy using the platform. This record protects you throughout the tenancy and at exit.'
-    },
-    {
-      num: '05',
-      title: 'Maintain protected tenancy',
-      desc: 'All payments, issues, agreements, and communications remain recorded and accessible for the full duration of your tenancy. Everything is documented.'
-    }
-  ],
-  'Landlord Flow': [
-    {
-      num: '01',
-      title: 'Create a tenancy record',
-      desc: 'Set up a structured rental record for your property and invite your tenant to sync. No listing required — the platform works alongside however the tenant found your property.'
-    },
-    {
-      num: '02',
-      title: 'Agree on terms',
-      desc: 'All rental conditions are clearly defined and documented within the platform before any payment is made. Both parties confirm.'
-    },
-    {
-      num: '03',
-      title: 'Receive structured payments',
-      desc: 'Rent is paid and tracked through secure, organized channels. All payments are documented and traceable by default.'
-    },
-    {
-      num: '04',
-      title: 'Manage with records',
-      desc: 'All interactions, updates, and communications throughout the tenancy are automatically documented. Nothing is left informal.'
-    },
-    {
-      num: '05',
-      title: 'Resolve with evidence',
-      desc: 'Disputes are handled using the full recorded history of the tenancy. Every interaction is available as evidence.'
-    }
-  ],
-  'Agent Flow': [
-    {
-      num: '01',
-      title: 'Complete verification',
-      desc: 'Establish a verified professional identity on the platform. Distinguish yourself from unverified operators. Your credential is your professional foundation.'
-    },
-    {
-      num: '02',
-      title: 'Facilitate structured deals',
-      desc: 'Manage rental transactions with proper documentation from offer to execution. Every deal you facilitate is recorded and attributed to your profile.'
-    },
-    {
-      num: '03',
-      title: 'Handle agreements digitally',
-      desc: 'All agreements are created, signed, and stored within the system. No paperwork. No ambiguity. Full accountability.'
-    },
-    {
-      num: '04',
-      title: 'Track all transactions',
-      desc: 'Each deal is recorded and attributed to your agent record. Commissions are structured and tracked. Your professional history is formalized.'
-    },
-    {
-      num: '05',
-      title: 'Build long-term credibility',
-      desc: 'Your performance history contributes to a visible reputation profile that compounds with every completed transaction.'
-    }
-  ]
-};
+const trustFlow = [
+  {
+    from: 'Tenant',
+    fromIcon: UserCircle2,
+    to: 'Domos Trust Layer',
+    toIcon: ShieldCheck,
+    action: 'Verifies & Locks Terms',
+    description: 'Tenant records identity and agrees to terms securely.'
+  },
+  {
+    from: 'Domos Trust Layer',
+    fromIcon: ShieldCheck,
+    to: 'Landlord / Agent',
+    toIcon: Building2,
+    action: 'Secures & Releases',
+    description: 'Landlord receives verified commitment and protected rent.'
+  }
+];
 
 export function HowItWorks() {
-  const [activeFlow, setActiveFlow] = useState<FlowAudience>('Tenant Flow');
-
   return (
-    <section id="how-it-works" className="py-24 bg-gray-50 sm:py-32">
+    <section id="how-it-works" className="py-24 bg-gray-50 sm:py-32 overflow-hidden border-t border-gray-100">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold tracking-tight text-navy">
-            Before. During. After. You are covered.
-          </h2>
+        <div className="text-center mb-16 lg:mb-24">
+          <motion.h2 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-5xl font-heading font-bold tracking-tight text-navy"
+          >
+            How Trust is Rebuilt.
+          </motion.h2>
+          <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto font-medium">
+            Domos acts as the institutional bridge between all parties.
+          </p>
         </div>
 
-        {/* Mobile View: Vertical Stacked Blocks */}
-        <div className="md:hidden flex flex-col gap-12">
-          {(Object.keys(howItWorksData) as FlowAudience[]).map((flowType) => (
-            <div key={flowType} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-              <div className="bg-navy px-6 py-4">
-                <h3 className="text-xl font-heading font-bold text-gold uppercase tracking-wider">
-                  {flowType}
-                </h3>
+        {/* Visual Flow: Tenant -> Domos -> Landlord */}
+        <div className="relative max-w-5xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-4 relative z-10">
+            
+            {/* Party 1: Tenant */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center text-center w-full lg:w-1/3"
+            >
+              <div className="h-24 w-24 rounded-full bg-white shadow-premium flex items-center justify-center text-navy mb-6 border border-gray-100">
+                <UserCircle2 className="h-12 w-12" />
               </div>
-              <div className="p-6">
-                <div className="space-y-8 relative">
-                  {/* Vertical connecting line */}
-                  <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gray-100 hidden sm:block"></div>
-                  
-                  {howItWorksData[flowType].map((step) => (
-                    <div key={step.num} className="relative z-10 sm:pl-16">
-                      <div className="hidden sm:flex absolute left-0 top-1 w-12 h-12 bg-blue-50 text-navy rounded-full items-center justify-center font-heading font-bold ring-4 ring-white">
-                        {step.num}
-                      </div>
-                      <span className="inline-block sm:hidden px-3 py-1 mb-3 rounded border border-gray-200 bg-gray-50 text-navy font-heading font-bold text-sm">
-                        Step {step.num}
-                      </span>
-                      <h4 className="text-lg font-heading font-bold text-gray-900 mb-2">{step.title}</h4>
-                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{step.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              <h3 className="text-2xl font-heading font-bold text-navy mb-2">The Tenant</h3>
+              <p className="text-sm text-gray-500 font-medium px-4">Verifies agent, signs agreement, and pays into escrow.</p>
+            </motion.div>
 
-        {/* Desktop View: Tabbed Flow Component */}
-        <div className="hidden md:block">
-          <div className="flex justify-center border-b border-gray-200 mb-10">
-            {(Object.keys(howItWorksData) as FlowAudience[]).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveFlow(tab)}
-                className={cn(
-                  "px-8 py-4 text-sm font-heading font-bold uppercase tracking-wider transition-colors border-b-2",
-                  activeFlow === tab 
-                    ? "border-navy text-navy" 
-                    : "border-transparent text-gray-400 hover:text-gray-700"
-                )}
+            {/* Bridge 1: Arrow & Action */}
+            <div className="hidden lg:flex flex-col items-center justify-center flex-1">
+              <motion.div
+                animate={{ x: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="text-gold mb-2"
               >
-                {tab}
-              </button>
-            ))}
+                <ArrowRight className="h-8 w-8" />
+              </motion.div>
+              <span className="text-[10px] font-bold text-navy uppercase tracking-widest whitespace-nowrap">Secured by Domos</span>
+            </div>
+
+            {/* Center: Domos Trust Layer */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 1 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center text-center w-full lg:w-1/3 p-8 bg-navy rounded-[3rem] shadow-premium relative"
+            >
+              <div className="absolute -top-4 -right-4 h-12 w-12 bg-gold rounded-2xl flex items-center justify-center text-navy shadow-lg">
+                <ShieldCheck className="h-7 w-7" />
+              </div>
+              <div className="h-20 w-20 rounded-2xl bg-white/10 flex items-center justify-center text-gold mb-6 backdrop-blur-sm">
+                <Landmark className="h-10 w-10" />
+              </div>
+              <h3 className="text-2xl font-heading font-bold text-white mb-2">Domos Layer</h3>
+              <p className="text-sm text-gold/80 font-medium px-4">Validates identity, locks contract, and holds funds.</p>
+            </motion.div>
+
+            {/* Bridge 2: Arrow & Action */}
+            <div className="hidden lg:flex flex-col items-center justify-center flex-1">
+              <motion.div
+                animate={{ x: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 2, delay: 0.5 }}
+                className="text-gold mb-2"
+              >
+                <ArrowRight className="h-8 w-8" />
+              </motion.div>
+              <span className="text-[10px] font-bold text-navy uppercase tracking-widest whitespace-nowrap">Verified Release</span>
+            </div>
+
+            {/* Party 2: Landlord / Agent */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center text-center w-full lg:w-1/3"
+            >
+              <div className="h-24 w-24 rounded-full bg-white shadow-premium flex items-center justify-center text-navy mb-6 border border-gray-100">
+                <Building2 className="h-12 w-12" />
+              </div>
+              <h3 className="text-2xl font-heading font-bold text-navy mb-2">Landlord & Agent</h3>
+              <p className="text-sm text-gray-500 font-medium px-4">Receives verified rent and documented tenancy record.</p>
+            </motion.div>
+
           </div>
 
-          <div className="bg-white rounded-3xl border border-gray-200 p-12 shadow-sm min-h-[500px]">
-            <div className="space-y-10 relative">
-              {/* Connecting logical track */}
-              <div className="absolute left-6 top-8 bottom-8 w-0.5 bg-gray-100"></div>
+          {/* Background Path (Desktop) */}
+          <div className="hidden lg:block absolute top-12 left-1/2 -translate-x-1/2 w-4/5 h-[2px] bg-gray-100 -z-10"></div>
+        </div>
 
-              {howItWorksData[activeFlow].map((step, idx) => (
-                <div key={step.num} className="relative pl-20 transition-all duration-500 ease-in-out">
-                  <div className={cn(
-                    "absolute left-0 top-0.5 w-12 h-12 rounded-full flex items-center justify-center font-heading font-bold text-lg ring-8 ring-white",
-                    idx === 0 ? "bg-navy text-gold" : "bg-gray-100 text-gray-400"
-                  )}>
-                    {step.num}
-                  </div>
-                  <h4 className="text-xl font-heading font-bold text-navy mb-3">{step.title}</h4>
-                  <p className="text-lg text-gray-600 leading-relaxed max-w-4xl">{step.desc}</p>
-                </div>
-              ))}
-            </div>
+        {/* Closing CTA/Note */}
+        <div className="mt-20 text-center">
+          <p className="text-navy font-heading font-bold text-lg mb-4 italic">
+            &ldquo;One platform. Three parties. Zero fraud.&rdquo;
+          </p>
+          <div className="flex justify-center gap-2">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-1.5 w-12 bg-navy rounded-full opacity-10"></div>
+            ))}
+            <div className="h-1.5 w-12 bg-gold rounded-full"></div>
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-1.5 w-12 bg-navy rounded-full opacity-10"></div>
+            ))}
           </div>
         </div>
 
