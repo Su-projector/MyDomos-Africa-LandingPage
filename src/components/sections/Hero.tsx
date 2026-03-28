@@ -5,7 +5,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-white pt-32 pb-16 lg:pt-48 lg:pb-24">
       {/* Subtle background abstract shape */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50 via-white to-white opacity-60"></div>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-blue-50 via-white to-white opacity-60"></div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 animate-fade-in">
         <div className="text-center max-w-4xl mx-auto">
@@ -20,9 +20,9 @@ export function Hero() {
           </div>
 
           <p className="mt-8 text-base md:text-lg max-w-2xl mx-auto text-gray-600 bg-gray-50 py-3 px-6 rounded-lg inline-block border border-gray-100">
-            My Domos Africa provides a structured system that enables tenants, landlords, and agents to verify, agree, and transact with full protection across the rental process.
+            My Domos Africa (the flagship institution of DomosHQ) provides a structured system that enables tenants, landlords, and agents to verify, agree, and transact with full protection across the rental process.
             <br />
-            <span className="block mt-2 font-semibold text-navy italic">Used before, during, and after every rental transaction.</span>
+            <span className="block mt-2 font-semibold text-navy italic">Used before, during, and after every rental transaction on My Domos.</span>
           </p>
 
           <p className="mt-6 text-sm text-gray-500 max-w-3xl mx-auto">
@@ -47,7 +47,7 @@ export function Hero() {
       {/* Trust Signal Strip */}
       <div className="mt-20 border-t border-gray-100 bg-navy relative overflow-hidden flex-none">
         {/* Subtle Map Silhouette equivalent via CSS pattern/opacity */}
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white to-transparent"></div>
         
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-700/50 py-8">

@@ -12,9 +12,22 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://mydomosafrica.vercel.app"),
   title: "My Domos Africa | Rental Trust Layer for Landlords & Tenants",
   description: "Experience Africa's institutional rental trust layer. Secure property management, payment protection, and verified interactions for tenants, landlords, and agents.",
-  keywords: ["My Domos Africa", "Rental Trust Layer", "Africa Property Management", "Secure Rent Payments Africa", "Tenant Protection Nigeria", "Landlord Security Africa", "DomosHQ"],
+  keywords: [
+    "My Domos Africa", 
+    "My Domos", 
+    "MyDomos", 
+    "Domos Africa", 
+    "DomosHQ", 
+    "Domos", 
+    "Domos Africa Rental Trust", 
+    "Rental Trust Layer", 
+    "Africa Property Management", 
+    "Secure Rent Payments Africa", 
+    "Tenant Protection Nigeria", 
+    "Landlord Security Africa"
+  ],
   alternates: {
-    canonical: "/",
+    canonical: "https://mydomosafrica.vercel.app",
   },
   openGraph: {
     title: "My Domos Africa | Institutional Rental Trust Layer",
@@ -62,9 +75,10 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "My Domos Africa",
+    "alternateName": ["My Domos", "MyDomos", "DomosHQ", "Domos"],
     "url": "https://mydomosafrica.vercel.app",
     "logo": "https://mydomosafrica.vercel.app/logo.png",
-    "description": "Africa's institutional rental trust layer, providing secure property management and payment protection.",
+    "description": "Africa's institutional rental trust layer. My Domos Africa (a product of DomosHQ) provides secure property management and payment protection.",
     "sameAs": [
       "https://x.com/DomosHQ",
       "https://www.linkedin.com/company/domoshq/"
