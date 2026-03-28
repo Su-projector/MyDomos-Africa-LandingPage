@@ -38,6 +38,7 @@ export function Footer() {
                   src="/logo.png"
                   alt="My Domos Africa - Institutional Rental Trust Layer Logo"
                   fill
+                  sizes="44px"
                   className="object-contain scale-110"
                 />
               </div>
